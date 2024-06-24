@@ -20,7 +20,6 @@ builder.Services.AddSingleton(cloudinary);
 // =================
 
 
-
 // CORS set up
 // =================
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -46,7 +45,10 @@ builder.Services.AddDbContext<DBContext>(
   );
 // =================
 
+builder.Services.AddControllers();
 builder.Services.AddAuthorization();
+builder.Services.AddIdentityCore<User>()
+.AddEntityFrameworkStores<DBContext>();
 builder.Services.AddIdentityApiEndpoints<User>()
 .AddEntityFrameworkStores<DBContext>();
 
@@ -89,6 +91,7 @@ app.UseCors(MyAllowSpecificOrigins);
 app.UseAuthorization();
 
 app.MapIdentityApi<User>();
+app.MapControllers();
 
 
 app.Run();
