@@ -1,10 +1,9 @@
+using Microsoft.AspNetCore.Identity;
+
 namespace color_picker_server.Models
 {
-  public class User
+  public class User : IdentityUser
   {
-    public int Id { get; set; }
-    public string Username { get; set; }
-    public string Password { get; set; }
+    public ICollection<Study> Studies { get; set; } = new List<Study>();
   }
-
 }
