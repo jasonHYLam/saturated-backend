@@ -4,6 +4,7 @@ using color_picker_server.Models;
 using Microsoft.AspNetCore.Identity;
 using postgresTest.Model;
 using CloudinaryDotNet.Actions;
+using Microsoft.EntityFrameworkCore;
 
 namespace color_picker_server.Controllers;
 
@@ -27,6 +28,7 @@ public class StudyController : ControllerBase
     _cloudinary = cloudinary;
   }
 
+  [HttpPost]
   public async Task<ActionResult<StudyDTO>> CreateStudy([FromForm] CreateStudyInput input)
   {
 
@@ -68,10 +70,30 @@ public class StudyController : ControllerBase
       DateUploaded = newStudy.DateUploaded
     };
 
-    return CreatedAtAction(nameof(GetStudy), new { id = newStudy.Id }, createdStudyDTO)
-
+    return CreatedAtAction(nameof(GetStudy), new { id = newStudy.Id }, createdStudyDTO);
   }
 
+  public async Task<ActionResult<IEnumerable<StudyPreviewDTO>>> GetAllStudies()
+  {
+    var user = await _userManager.GetUserAsync(HttpContext.User);
 
+    IQueryable<Study> studiesQuery =
+    from study in _context.Studies
+    where study.UserId == user.Id
+    select study;
 
+    var allStudies = await studiesQuery.ToListAsync();
+
+    var allStudyDTOs = allStudies.Select(
+      s => new StudyPreviewDTO
+      {
+        Id = s.Id,
+        Title = s.Title,
+        DateUploaded = s.DateUploaded,
+        ThumbnailLink = s.ThumbnailLink,
+      }
+    ).ToList();
+
+    return allStudyDTOs;
+  }
 }
