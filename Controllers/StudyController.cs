@@ -60,13 +60,15 @@ public class StudyController : ControllerBase
       DateUploaded = new DateTime(),
     };
 
-    var CreatedStudyDTO = new StudyDTO
+    var createdStudyDTO = new StudyDTO
     {
       Id = newStudy.Id,
       Title = newStudy.Title,
       OriginalLink = newStudy.OriginalLink,
       DateUploaded = newStudy.DateUploaded
     };
+
+    return CreatedAtAction(nameof(GetStudy), new { id = newStudy.Id }, createdStudyDTO)
 
   }
 
