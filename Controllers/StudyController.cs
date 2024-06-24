@@ -2,7 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using CloudinaryDotNet;
 using color_picker_server.Models;
 using Microsoft.AspNetCore.Identity;
-
+using postgresTest.Model;
+using CloudinaryDotNet.Actions;
 
 namespace color_picker_server.Controllers;
 
@@ -25,6 +26,42 @@ public class StudyController : ControllerBase
     _userManager = userManager;
     _cloudinary = cloudinary;
   }
+
+  public async Task<ActionResult<StudyDTO>> CreateStudy([FromForm] CreateStudyInput input)
+  {
+
+    var user = await _userManager.GetUserAsync(HttpContext.User);
+
+    var uploadParams = new ImageUploadParams()
+    {
+      File = new FileDescription(
+        input.ImageFile.FileName,
+        input.ImageFile.OpenReadStream()
+        ),
+      EagerTransforms = new List<Transformation>()
+      {
+        new EagerTransformation()
+        .AspectRatio("1.0")
+        .Width(300)
+        .Chain()
+        .FetchFormat("webp")
+      }
+    };
+
+    var uploadResult = _cloudinary.Upload(uploadParams);
+
+    Study newStudy = new Study
+    {
+      Title = input.Title,
+      OriginalLink = input.OriginalLink,
+      ImageLink = uploadResult.SecureUrl.ToString(),
+      ThumbnailLink = uploadResult.Eager[0].SecureUrl.ToString(),
+      UserId = user.Id,
+      // DateCreated = new DateTime(),
+    };
+
+  }
+
 
 
 }
