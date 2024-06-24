@@ -57,8 +57,12 @@ else
   });
 }
 
+app.UseHttpsRedirection();
+app.UseRouting();
+app.UseCors(MyAllowSpecificOrigins);
+app.UseAuthorization();
+
 app.MapIdentityApi<User>();
 
-app.MapGet("/", () => "Hello World!");
 
 app.Run();
