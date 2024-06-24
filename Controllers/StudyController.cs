@@ -73,6 +73,7 @@ public class StudyController : ControllerBase
     return CreatedAtAction(nameof(GetStudy), new { id = newStudy.Id }, createdStudyDTO);
   }
 
+  [HttpGet("allStudies")]
   public async Task<ActionResult<IEnumerable<StudyPreviewDTO>>> GetAllStudies()
   {
     var user = await _userManager.GetUserAsync(HttpContext.User);
@@ -96,4 +97,26 @@ public class StudyController : ControllerBase
 
     return allStudyDTOs;
   }
+
+  public async Task<ActionResult<StudyDTO>> GetStudy(long id)
+  {
+    var study = await _context.Studies.FindAsync(id);
+
+    if (study == null)
+    {
+      return NotFound();
+    }
+    else
+    {
+      var studyDTO = new StudyDTO
+      {
+        Id = study.Id,
+        Title = study.Title,
+        OriginalLink = study.OriginalLink,
+        DateUploaded = study.DateUploaded,
+      };
+      return studyDTO;
+    }
+  }
+
 }
