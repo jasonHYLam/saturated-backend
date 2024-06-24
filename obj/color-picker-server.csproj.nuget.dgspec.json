@@ -58,6 +58,10 @@
               "target": "Package",
               "version": "[8.0.6, )"
             },
+            "NSwag.AspNetCore": {
+              "target": "Package",
+              "version": "[14.0.8, )"
+            },
             "Npgsql": {
               "target": "Package",
               "version": "[8.0.3, )"
