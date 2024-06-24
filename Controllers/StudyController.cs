@@ -57,7 +57,15 @@ public class StudyController : ControllerBase
       ImageLink = uploadResult.SecureUrl.ToString(),
       ThumbnailLink = uploadResult.Eager[0].SecureUrl.ToString(),
       UserId = user.Id,
-      // DateCreated = new DateTime(),
+      DateUploaded = new DateTime(),
+    };
+
+    var CreatedStudyDTO = new StudyDTO
+    {
+      Id = newStudy.Id,
+      Title = newStudy.Title,
+      OriginalLink = newStudy.OriginalLink,
+      DateUploaded = newStudy.DateUploaded
     };
 
   }
