@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("color-picker-server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ac58aab33e2c2acaeafc0edf92a8e712b446494b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a1e947cf279ea58989089bf6c2231086fdd0843e")]
 [assembly: System.Reflection.AssemblyProductAttribute("color-picker-server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("color-picker-server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
