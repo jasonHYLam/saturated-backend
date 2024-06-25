@@ -69,6 +69,9 @@ public class StudyController : ControllerBase
       DateUploaded = new DateTime(),
     };
 
+    _context.Studies.Add(newStudy);
+    await _context.SaveChangesAsync();
+
     var createdStudyDTO = new StudyDTO
     {
       Id = newStudy.Id,
@@ -84,6 +87,8 @@ public class StudyController : ControllerBase
   public async Task<ActionResult<IEnumerable<StudyPreviewDTO>>> GetAllStudies()
   {
     var user = await _userManager.GetUserAsync(HttpContext.User);
+    Console.WriteLine("checking user");
+    Console.WriteLine(user);
     if (user == null)
     {
       return NotFound();
@@ -95,6 +100,8 @@ public class StudyController : ControllerBase
     select study;
 
     var allStudies = await studiesQuery.ToListAsync();
+    Console.WriteLine("checking allStudies");
+    allStudies.ForEach(i => Console.WriteLine(i));
 
     var allStudyDTOs = allStudies.Select(
       s => new StudyPreviewDTO
