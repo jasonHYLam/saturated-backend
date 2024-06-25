@@ -12,5 +12,7 @@ namespace color_picker_server.Models
     public int StudyId { get; set; }
 
     // Add normalised coordinates
+    public double xOrdinateAsFraction { get; set; }
+    public double yOrdinateAsFraction { get; set; }
   }
 }
