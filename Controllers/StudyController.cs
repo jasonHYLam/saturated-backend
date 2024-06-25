@@ -54,7 +54,8 @@ public class StudyController : ControllerBase
         .Width(300)
         .Chain()
         .FetchFormat("webp")
-      }
+      },
+      PublicIdPrefix = "saturated"
     };
 
     var uploadResult = _cloudinary.Upload(uploadParams);
