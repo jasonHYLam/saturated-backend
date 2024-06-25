@@ -1,4 +1,4 @@
-namespace postgresTest.Model;
+namespace color_picker_server.Models.Input;
 
 public class CreateStudyInput
 {

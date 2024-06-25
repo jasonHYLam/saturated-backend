@@ -2,9 +2,10 @@ using Microsoft.AspNetCore.Mvc;
 using CloudinaryDotNet;
 using color_picker_server.Models;
 using Microsoft.AspNetCore.Identity;
-using postgresTest.Model;
+using color_picker_server.Models.DTO;
 using CloudinaryDotNet.Actions;
 using Microsoft.EntityFrameworkCore;
+using color_picker_server.Models.Input;
 
 namespace color_picker_server.Controllers;
 
@@ -88,8 +89,6 @@ public class StudyController : ControllerBase
   public async Task<ActionResult<IEnumerable<StudyPreviewDTO>>> GetAllStudies()
   {
     var user = await _userManager.GetUserAsync(HttpContext.User);
-    Console.WriteLine("checking user");
-    Console.WriteLine(user);
     if (user == null)
     {
       return NotFound();
