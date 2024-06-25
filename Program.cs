@@ -2,6 +2,7 @@ using color_picker_server.Models;
 using Microsoft.EntityFrameworkCore;
 using dotenv.net;
 using CloudinaryDotNet;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +35,13 @@ builder.Services.AddCors(options =>
       .AllowAnyMethod()
       .AllowCredentials();
     });
+});
+
+// Added this to solve cross site...
+builder.Services.ConfigureApplicationCookie(options =>
+{
+  options.Cookie.SameSite = SameSiteMode.None;
+  options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 });
 // =================
 

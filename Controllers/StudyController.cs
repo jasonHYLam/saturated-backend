@@ -33,6 +33,13 @@ public class StudyController : ControllerBase
   {
 
     var user = await _userManager.GetUserAsync(HttpContext.User);
+    Console.WriteLine("checking user");
+    Console.WriteLine(user);
+
+    if (user == null)
+    {
+      return NotFound();
+    }
 
     var uploadParams = new ImageUploadParams()
     {
@@ -77,6 +84,10 @@ public class StudyController : ControllerBase
   public async Task<ActionResult<IEnumerable<StudyPreviewDTO>>> GetAllStudies()
   {
     var user = await _userManager.GetUserAsync(HttpContext.User);
+    if (user == null)
+    {
+      return NotFound();
+    }
 
     IQueryable<Study> studiesQuery =
     from study in _context.Studies
