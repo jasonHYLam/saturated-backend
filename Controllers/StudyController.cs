@@ -117,8 +117,11 @@ public class StudyController : ControllerBase
     return allStudyDTOs;
   }
 
-  public async Task<ActionResult<StudyDTO>> GetStudy(long id)
+  [HttpGet("{id}")]
+  public async Task<ActionResult<StudyDTO>> GetStudy(int id)
   {
+    Console.WriteLine("checking id");
+    Console.WriteLine(id);
     var study = await _context.Studies.FindAsync(id);
 
     if (study == null)
@@ -132,6 +135,7 @@ public class StudyController : ControllerBase
         Id = study.Id,
         Title = study.Title,
         OriginalLink = study.OriginalLink,
+        ImageLink = study.ImageLink,
         DateUploaded = study.DateUploaded,
       };
       return studyDTO;
