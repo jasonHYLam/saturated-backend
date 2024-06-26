@@ -29,9 +29,10 @@ public class NoteController : ControllerBase
   }
 
   [HttpPost]
-  // public async Task<NoteDTO> CreateNote([FromForm] CreateNoteInput input)
-  public async Task<ActionResult<NoteDTO>> CreateNote([FromForm] CreateNoteInput input)
+  public async Task<ActionResult<NoteDTO>> CreateNote([FromBody] CreateNoteInput input)
   {
+    Console.WriteLine("Creating Note");
+    Console.WriteLine(input);
     Note newNote = new Note
     {
       Text = input.Text,
