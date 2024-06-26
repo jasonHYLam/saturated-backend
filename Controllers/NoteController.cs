@@ -28,9 +28,11 @@ public class NoteController : ControllerBase
     _cloudinary = cloudinary;
   }
 
-  [HttpPost]
-  public async Task<ActionResult<NoteDTO>> CreateNote([FromBody] CreateNoteInput input)
+  [HttpPost("{id}")]
+  public async Task<ActionResult<NoteDTO>> CreateNote(int id, [FromBody] CreateNoteInput input)
   {
+    Console.WriteLine("checking id");
+    Console.WriteLine(id);
     Console.WriteLine("Creating Note");
     Console.WriteLine(input);
     Note newNote = new Note
@@ -40,6 +42,7 @@ public class NoteController : ControllerBase
       GuessedHexColor = input.GuessedHexColor,
       XOrdinateAsFraction = input.XOrdinateAsFraction,
       YOrdinateAsFraction = input.YOrdinateAsFraction,
+      StudyId = id
     };
 
     _context.Notes.Add(newNote);
@@ -56,5 +59,14 @@ public class NoteController : ControllerBase
     };
 
     return CreatedAtAction(nameof(CreateNote), new { id = newNote.Id }, createdNoteDTO);
+  }
+
+  [HttpGet("allNotes")]
+  public async Task<ActionResult<IEnumerable<NoteDTO>>> GetAllNotes()
+  {
+    // IQueryable<Note> notesQuery =
+    // from note in _context.Notes
+    // where Note.StudyId == 
+
   }
 }
