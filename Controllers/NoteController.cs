@@ -63,5 +63,14 @@ public class NoteController : ControllerBase
     return CreatedAtAction(nameof(CreateNote), new { id = newNote.Id }, createdNoteDTO);
   }
 
-  public async Task<ActionResult<NoteDTO>> UpdateNote(int)
+  public async Task<ActionResult<NoteDTO>> UpdateNote(int noteId, [FromBody] UpdateNoteInput input)
+  {
+    var noteToUpdate = await _context.Notes.SingleOrDefaultAsync(n => n.Id == noteId);
+    if (noteToUpdate == null)
+    {
+      return NotFound();
+    }
+    noteToUpdate.Text = input.Text;
+    await _context.SaveChangesAsync();
+  }
 }
