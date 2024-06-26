@@ -34,8 +34,6 @@ public class StudyController : ControllerBase
   {
 
     var user = await _userManager.GetUserAsync(HttpContext.User);
-    Console.WriteLine("checking user");
-    Console.WriteLine(user);
 
     if (user == null)
     {
@@ -100,8 +98,6 @@ public class StudyController : ControllerBase
     select study;
 
     var allStudies = await studiesQuery.ToListAsync();
-    Console.WriteLine("checking allStudies");
-    allStudies.ForEach(i => Console.WriteLine(i));
 
     var allStudyDTOs = allStudies.Select(
       s => new StudyPreviewDTO
@@ -119,12 +115,7 @@ public class StudyController : ControllerBase
   [HttpGet("{id}")]
   public async Task<ActionResult<StudyDTO>> GetStudy(int id)
   {
-    Console.WriteLine("checking id");
-    Console.WriteLine(id);
-    // var study = await _context.Studies.FindAsync(id);
     var study = await _context.Studies.Include(s => s.Notes).FirstOrDefaultAsync(s => s.Id == id);
-    Console.WriteLine("checking study notes");
-    Console.WriteLine(study.Notes);
 
     if (study == null)
     {

@@ -30,11 +30,11 @@ public class NoteController : ControllerBase
     _cloudinary = cloudinary;
   }
 
-  [HttpPost("{id}")]
-  public async Task<ActionResult<NoteDTO>> CreateNote(int id, [FromBody] CreateNoteInput input)
+  [HttpPost("{studyId}")]
+  public async Task<ActionResult<NoteDTO>> CreateNote(int studyId, [FromBody] CreateNoteInput input)
   {
     Console.WriteLine("checking id");
-    Console.WriteLine(id);
+    Console.WriteLine(studyId);
     Console.WriteLine("Creating Note");
     Console.WriteLine(input);
     Note newNote = new Note
@@ -44,7 +44,7 @@ public class NoteController : ControllerBase
       GuessedHexColor = input.GuessedHexColor,
       XOrdinateAsFraction = input.XOrdinateAsFraction,
       YOrdinateAsFraction = input.YOrdinateAsFraction,
-      StudyId = id
+      StudyId = studyId
     };
 
     _context.Notes.Add(newNote);
@@ -63,27 +63,5 @@ public class NoteController : ControllerBase
     return CreatedAtAction(nameof(CreateNote), new { id = newNote.Id }, createdNoteDTO);
   }
 
-  [HttpGet("{studyId}")]
-  public async Task<ActionResult<IEnumerable<NoteDTO>>> GetAllNotes(int studyId)
-  {
-    IQueryable<Note> notesQuery =
-    from note in _context.Notes
-    where note.StudyId == studyId
-    select note;
-
-    var allNotesForStudy = await notesQuery.ToListAsync();
-    var allNoteDTOs = allNotesForStudy.Select(
-      n => new NoteDTO
-      {
-        Id = n.Id,
-        Text = n.Text,
-        OriginalHexColor = n.OriginalHexColor,
-        GuessedHexColor = n.GuessedHexColor,
-        XOrdinateAsFraction = n.XOrdinateAsFraction,
-        YOrdinateAsFraction = n.YOrdinateAsFraction,
-      }
-    ).ToList();
-
-    return allNoteDTOs;
-  }
+  public async Task<ActionResult<NoteDTO>> UpdateNote(int)
 }
