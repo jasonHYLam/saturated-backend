@@ -5,6 +5,8 @@ using color_picker_server.Models.Input;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 
 namespace color_picker_server.Controllers;
 
@@ -61,12 +63,27 @@ public class NoteController : ControllerBase
     return CreatedAtAction(nameof(CreateNote), new { id = newNote.Id }, createdNoteDTO);
   }
 
-  [HttpGet("allNotes")]
-  public async Task<ActionResult<IEnumerable<NoteDTO>>> GetAllNotes()
+  [HttpGet("{studyId}")]
+  public async Task<ActionResult<IEnumerable<NoteDTO>>> GetAllNotes(int studyId)
   {
-    // IQueryable<Note> notesQuery =
-    // from note in _context.Notes
-    // where Note.StudyId == 
+    IQueryable<Note> notesQuery =
+    from note in _context.Notes
+    where note.StudyId == studyId
+    select note;
 
+    var allNotesForStudy = await notesQuery.ToListAsync();
+    var allNoteDTOs = allNotesForStudy.Select(
+      n => new NoteDTO
+      {
+        Id = n.Id,
+        Text = n.Text,
+        OriginalHexColor = n.OriginalHexColor,
+        GuessedHexColor = n.GuessedHexColor,
+        XOrdinateAsFraction = n.XOrdinateAsFraction,
+        YOrdinateAsFraction = n.YOrdinateAsFraction,
+      }
+    ).ToList();
+
+    return allNoteDTOs;
   }
 }
