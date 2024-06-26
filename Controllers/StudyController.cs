@@ -121,7 +121,10 @@ public class StudyController : ControllerBase
   {
     Console.WriteLine("checking id");
     Console.WriteLine(id);
-    var study = await _context.Studies.FindAsync(id);
+    // var study = await _context.Studies.FindAsync(id);
+    var study = await _context.Studies.Include(s => s.Notes).FirstOrDefaultAsync(s => s.Id == id);
+    Console.WriteLine("checking study notes");
+    Console.WriteLine(study.Notes);
 
     if (study == null)
     {
@@ -136,6 +139,7 @@ public class StudyController : ControllerBase
         OriginalLink = study.OriginalLink,
         ImageLink = study.ImageLink,
         DateUploaded = study.DateUploaded,
+        Notes = study.Notes,
       };
       return studyDTO;
     }

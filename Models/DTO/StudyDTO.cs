@@ -9,4 +9,5 @@ public class StudyDTO
   public string ImageLink { get; set; }
   public DateTime DateUploaded { get; set; }
 
+  public ICollection<Note> Notes { get; set; }
 }
