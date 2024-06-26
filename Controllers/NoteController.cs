@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace color_picker_server.Controllers;
 
+[ApiController]
+[Route("[controller]")]
 public class NoteController : ControllerBase
 {
 
