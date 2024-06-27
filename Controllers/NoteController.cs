@@ -31,10 +31,10 @@ public class NoteController : ControllerBase
   [HttpPost("{studyId}")]
   public async Task<ActionResult<NoteDTO>> CreateNote(int studyId, [FromBody] CreateNoteInput input)
   {
-    Console.WriteLine("checking id");
-    Console.WriteLine(studyId);
-    Console.WriteLine("Creating Note");
-    Console.WriteLine(input);
+    if (studyId == null)
+    {
+      return NotFound();
+    }
     Note newNote = new Note
     {
       Text = input.Text,
@@ -62,8 +62,12 @@ public class NoteController : ControllerBase
   }
 
   [HttpPut("{noteId}")]
-  public async Task<ActionResult> UpdateNote(int noteId, [FromBody] UpdateNoteInput input)
+  public async Task<ActionResult> UpdateNote(int? noteId, [FromBody] UpdateNoteInput input)
   {
+    if (noteId == null)
+    {
+      return NotFound();
+    }
     var noteToUpdate = await _context.Notes.SingleOrDefaultAsync(n => n.Id == noteId);
     if (noteToUpdate == null)
     {
@@ -76,8 +80,12 @@ public class NoteController : ControllerBase
   }
 
   [HttpDelete("{noteId}")]
-  public async Task<ActionResult> DeleteNote(int noteId)
+  public async Task<ActionResult> DeleteNote(int? noteId)
   {
+    if (noteId == null)
+    {
+      return NotFound();
+    }
 
     var noteToDelete = await _context.Notes.SingleOrDefaultAsync(n => n.Id == noteId);
     if (noteToDelete == null)
