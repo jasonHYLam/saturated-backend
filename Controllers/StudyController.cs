@@ -112,10 +112,10 @@ public class StudyController : ControllerBase
     return allStudyDTOs;
   }
 
-  [HttpGet("{id}")]
-  public async Task<ActionResult<StudyDTO>> GetStudy(int id)
+  [HttpGet("{studyId}")]
+  public async Task<ActionResult<StudyDTO>> GetStudy(int studyId)
   {
-    var study = await _context.Studies.Include(s => s.Notes).FirstOrDefaultAsync(s => s.Id == id);
+    var study = await _context.Studies.Include(s => s.Notes).FirstOrDefaultAsync(s => s.Id == studyId);
 
     if (study == null)
     {
