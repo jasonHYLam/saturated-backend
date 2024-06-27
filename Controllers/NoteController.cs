@@ -62,7 +62,7 @@ public class NoteController : ControllerBase
   }
 
   [HttpPut("{noteId}")]
-  public async Task<ActionResult> UpdateNote(int? noteId, [FromBody] UpdateNoteInput input)
+  public async Task<ActionResult<NoteDTO>> UpdateNote(int? noteId, [FromBody] UpdateNoteInput input)
   {
     if (noteId == null)
     {
@@ -76,7 +76,17 @@ public class NoteController : ControllerBase
     noteToUpdate.Text = input.Text;
     await _context.SaveChangesAsync();
 
-    return Ok();
+    var updatedNoteDTO = new NoteDTO
+    {
+      Id = noteToUpdate.Id,
+      Text = noteToUpdate.Text,
+      OriginalHexColor = noteToUpdate.OriginalHexColor,
+      GuessedHexColor = noteToUpdate.GuessedHexColor,
+      XOrdinateAsFraction = noteToUpdate.XOrdinateAsFraction,
+      YOrdinateAsFraction = noteToUpdate.YOrdinateAsFraction,
+    };
+
+    return CreatedAtAction(nameof(UpdateNote), new { id = noteToUpdate.Id }, updatedNoteDTO);
   }
 
   [HttpDelete("{noteId}")]
