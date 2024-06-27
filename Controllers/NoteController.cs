@@ -2,11 +2,9 @@ using CloudinaryDotNet;
 using color_picker_server.Models;
 using color_picker_server.Models.DTO;
 using color_picker_server.Models.Input;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
 
 namespace color_picker_server.Controllers;
 
@@ -63,7 +61,8 @@ public class NoteController : ControllerBase
     return CreatedAtAction(nameof(CreateNote), new { id = newNote.Id }, createdNoteDTO);
   }
 
-  public async Task<ActionResult<NoteDTO>> UpdateNote(int noteId, [FromBody] UpdateNoteInput input)
+  [HttpPut("{noteId}")]
+  public async Task<ActionResult> UpdateNote(int noteId, [FromBody] UpdateNoteInput input)
   {
     var noteToUpdate = await _context.Notes.SingleOrDefaultAsync(n => n.Id == noteId);
     if (noteToUpdate == null)
@@ -72,5 +71,23 @@ public class NoteController : ControllerBase
     }
     noteToUpdate.Text = input.Text;
     await _context.SaveChangesAsync();
+
+    return Ok();
+  }
+
+  [HttpDelete("{noteId}")]
+  public async Task<ActionResult> DeleteNote(int noteId)
+  {
+
+    var noteToDelete = await _context.Notes.SingleOrDefaultAsync(n => n.Id == noteId);
+    if (noteToDelete == null)
+    {
+      return NotFound();
+    }
+    _context.Notes.Remove(noteToDelete);
+    await _context.SaveChangesAsync();
+
+    return Ok();
+
   }
 }
