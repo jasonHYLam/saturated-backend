@@ -51,8 +51,6 @@ public class StudyController : ControllerBase
         new EagerTransformation()
         .Width(300)
         .Height(300)
-
-        // .AspectRatio("1.0")
         .Chain()
         .FetchFormat("webp")
       },
@@ -61,9 +59,15 @@ public class StudyController : ControllerBase
 
     var uploadResult = _cloudinary.Upload(uploadParams);
 
+    var studyTitle = input.Title;
+    if (input.Title == null)
+    {
+      studyTitle = "Untitled";
+    }
+
     Study newStudy = new Study
     {
-      Title = input.Title,
+      Title = studyTitle,
       OriginalLink = input.OriginalLink,
       ImageLink = uploadResult.SecureUrl.ToString(),
       ThumbnailLink = uploadResult.Eager[0].SecureUrl.ToString(),
@@ -125,6 +129,7 @@ public class StudyController : ControllerBase
     }
     else
     {
+
       var studyDTO = new StudyDTO
       {
         Id = study.Id,
@@ -136,6 +141,29 @@ public class StudyController : ControllerBase
       };
       return studyDTO;
     }
+  }
+
+  [HttpDelete("{studyId}")]
+  public async Task<ActionResult> DeleteStudy(int? studyId)
+  {
+    if (studyId == null)
+    {
+      return NotFound();
+    }
+    else
+    {
+
+      var studyToDelete = await _context.Studies.SingleOrDefaultAsync(s => s.Id == studyId);
+      if (studyToDelete == null)
+      {
+        return NotFound();
+      }
+      _context.Studies.Remove(studyToDelete);
+      await _context.SaveChangesAsync();
+
+      return Ok();
+    }
+
   }
 
 }
