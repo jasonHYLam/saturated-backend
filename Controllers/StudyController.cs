@@ -51,6 +51,7 @@ public class StudyController : ControllerBase
         new EagerTransformation()
         .Width(300)
         .Height(300)
+        .Crop("fill")
         .Chain()
         .FetchFormat("webp")
       },
