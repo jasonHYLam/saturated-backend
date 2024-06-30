@@ -9,7 +9,7 @@ namespace color_picker_server.Controllers;
 [ApiController]
 [Authorize]
 [Route("[controller]")]
-class UserController : ControllerBase
+public class UserController : ControllerBase
 {
 
 
