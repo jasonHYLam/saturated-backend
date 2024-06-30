@@ -1,6 +1,7 @@
 using color_picker_server.Models;
 using dotenv.net;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -44,8 +45,12 @@ public class UserController : ControllerBase
     return Ok(isGuest);
   }
 
+  [HttpPost("logout")]
   public async Task<ActionResult> Logout()
   {
+    await _signInManager.SignOutAsync();
+
+    return Ok();
 
   }
 
