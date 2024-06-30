@@ -87,7 +87,7 @@ public class StudyController : ControllerBase
       DateUploaded = newStudy.DateUploaded
     };
 
-    return CreatedAtAction(nameof(GetStudy), new { id = newStudy.Id }, createdStudyDTO);
+    return CreatedAtAction(nameof(CreateStudy), new { id = newStudy.Id }, createdStudyDTO);
   }
 
   [HttpGet("allStudies")]
