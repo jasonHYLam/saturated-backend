@@ -8,6 +8,7 @@ namespace color_picker_server.Controllers;
 
 [ApiController]
 [Authorize]
+[Route("[controller]")]
 class UserController : ControllerBase
 {
 
@@ -23,6 +24,8 @@ class UserController : ControllerBase
     _userManager = userManager;
   }
 
+
+  [HttpGet("isGuest")]
   public async Task<ActionResult> GetIsUserGuest()
   {
     DotEnv.Load(options: new DotEnvOptions(probeForEnv: true));
