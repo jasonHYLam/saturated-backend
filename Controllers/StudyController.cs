@@ -49,8 +49,10 @@ public class StudyController : ControllerBase
       EagerTransforms = new List<Transformation>()
       {
         new EagerTransformation()
-        .AspectRatio("1.0")
         .Width(300)
+        .Height(300)
+
+        // .AspectRatio("1.0")
         .Chain()
         .FetchFormat("webp")
       },
