@@ -2,6 +2,7 @@ using CloudinaryDotNet;
 using color_picker_server.Models;
 using color_picker_server.Models.DTO;
 using color_picker_server.Models.Input;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 namespace color_picker_server.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("[controller]")]
 public class NoteController : ControllerBase
 {

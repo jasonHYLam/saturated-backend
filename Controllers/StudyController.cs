@@ -6,10 +6,12 @@ using color_picker_server.Models.DTO;
 using CloudinaryDotNet.Actions;
 using Microsoft.EntityFrameworkCore;
 using color_picker_server.Models.Input;
+using Microsoft.AspNetCore.Authorization;
 
 namespace color_picker_server.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("[controller]")]
 public class StudyController : ControllerBase
 {
