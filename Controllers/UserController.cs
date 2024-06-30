@@ -12,16 +12,18 @@ namespace color_picker_server.Controllers;
 public class UserController : ControllerBase
 {
 
-
+  private readonly SignInManager<User> _signInManager;
   private readonly UserManager<User> _userManager;
   private readonly DBContext _context;
   public UserController(
     DBContext context,
-    UserManager<User> userManager
+    UserManager<User> userManager,
+    SignInManager<User> signInManager
     )
   {
     _context = context;
     _userManager = userManager;
+    _signInManager = signInManager;
   }
 
 
@@ -40,6 +42,11 @@ public class UserController : ControllerBase
     Console.WriteLine(isGuest);
 
     return Ok(isGuest);
+  }
+
+  public async Task<ActionResult> Logout()
+  {
+
   }
 
 }
