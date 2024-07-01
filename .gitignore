@@ -1,2 +1,6 @@
 appsettings.json
 .env
+
+obj
+bin
+.vscode

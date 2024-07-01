@@ -2,13 +2,12 @@ using color_picker_server.Models;
 using Microsoft.EntityFrameworkCore;
 using dotenv.net;
 using CloudinaryDotNet;
-using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
+DotEnv.Load(options: new DotEnvOptions(probeForEnv: true));
 // Cloudinary set up
 // =================
-DotEnv.Load(options: new DotEnvOptions(probeForEnv: true));
 
 Account account = new Account(
   Environment.GetEnvironmentVariable("CLOUDINARY_NAME"),
@@ -30,14 +29,13 @@ builder.Services.AddCors(options =>
     name: MyAllowSpecificOrigins,
     policy =>
     {
-      policy.WithOrigins(["http://localhost:5173"])
+      policy.WithOrigins([Environment.GetEnvironmentVariable("FRONTEND_DOMAIN")])
       .AllowAnyHeader()
       .AllowAnyMethod()
       .AllowCredentials();
     });
 });
 
-// Added this to solve cross site...
 builder.Services.ConfigureApplicationCookie(options =>
 {
   options.Cookie.SameSite = SameSiteMode.None;
@@ -47,7 +45,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 // DB set up
 // =================
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnectionString");
+var connectionString = Environment.GetEnvironmentVariable("PSQL_CONNECTION_STRING");
 builder.Services.AddDbContext<DBContext>(
   options => options.UseNpgsql(connectionString)
   );
