@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="../build/color-picker-server.props" />
-</Project>
