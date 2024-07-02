@@ -125,14 +125,18 @@ public class StudyController : ControllerBase
   public async Task<ActionResult<StudyDTO>> GetStudy(int studyId)
   {
     var study = await _context.Studies.Include(s => s.Notes).FirstOrDefaultAsync(s => s.Id == studyId);
+    var user = await _userManager.GetUserAsync(HttpContext.User);
 
     if (study == null)
     {
       return NotFound();
     }
+    else if (study.UserId != user.Id)
+    {
+      return Forbid();
+    }
     else
     {
-
       var studyDTO = new StudyDTO
       {
         Id = study.Id,
@@ -163,10 +167,7 @@ public class StudyController : ControllerBase
       }
       _context.Studies.Remove(studyToDelete);
       await _context.SaveChangesAsync();
-
       return Ok();
     }
-
   }
-
 }
