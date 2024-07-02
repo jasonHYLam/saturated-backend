@@ -2,6 +2,7 @@ using color_picker_server.Models;
 using Microsoft.EntityFrameworkCore;
 using dotenv.net;
 using CloudinaryDotNet;
+using Microsoft.Extensions.Configuration.EnvironmentVariables;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,15 +11,14 @@ DotEnv.Load(options: new DotEnvOptions(probeForEnv: true));
 // =================
 
 Account account = new Account(
-  Environment.GetEnvironmentVariable("CLOUDINARY_NAME"),
-  Environment.GetEnvironmentVariable("CLOUDINARY_API_KEY"),
-  Environment.GetEnvironmentVariable("CLOUDINARY_API_SECRET")
+  Environment.GetEnvironmentVariable("ASPNETCORE_CLOUDINARY_NAME"),
+  Environment.GetEnvironmentVariable("ASPNETCORE_CLOUDINARY_API_KEY"),
+  Environment.GetEnvironmentVariable("ASPNETCORE_CLOUDINARY_API_SECRET")
 );
 Cloudinary cloudinary = new Cloudinary(account);
 cloudinary.Api.Secure = true;
 builder.Services.AddSingleton(cloudinary);
 // =================
-
 
 // CORS set up
 // =================
@@ -29,7 +29,7 @@ builder.Services.AddCors(options =>
     name: MyAllowSpecificOrigins,
     policy =>
     {
-      policy.WithOrigins([Environment.GetEnvironmentVariable("FRONTEND_DOMAIN")])
+      policy.WithOrigins([Environment.GetEnvironmentVariable("ASPNETCORE_FRONTEND_DOMAIN")])
       .AllowAnyHeader()
       .AllowAnyMethod()
       .AllowCredentials();
@@ -45,7 +45,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 // DB set up
 // =================
-var connectionString = Environment.GetEnvironmentVariable("PSQL_CONNECTION_STRING");
+var connectionString = Environment.GetEnvironmentVariable("ASPNETCORE_PSQL_CONNECTION_STRING");
 builder.Services.AddDbContext<DBContext>(
   options => options.UseNpgsql(connectionString)
   );
