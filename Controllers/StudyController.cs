@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace color_picker_server.Controllers;
 
 [ApiController]
-[Authorize]
+// [Authorize]
 [Route("[controller]")]
 public class StudyController : ControllerBase
 {
@@ -101,12 +101,13 @@ public class StudyController : ControllerBase
       return NotFound();
     }
 
-    IQueryable<Study> studiesQuery =
-    from study in _context.Studies
-    where study.UserId == user.Id
-    select study;
+    // IQueryable<Study> studiesQuery =
+    // from study in _context.Studies
+    // where study.UserId == user.Id
+    // select study;
 
-    var allStudies = await studiesQuery.ToListAsync();
+    // var allStudies = await studiesQuery.ToListAsync();
+    var allStudies = await _context.Studies.ToListAsync();
 
     var allStudyDTOs = allStudies.Select(
       s => new StudyPreviewDTO

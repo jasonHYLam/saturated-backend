@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 namespace color_picker_server.Controllers;
 
 [ApiController]
-[Authorize]
+// [Authorize]
 [Route("[controller]")]
 public class NoteController : ControllerBase
 {

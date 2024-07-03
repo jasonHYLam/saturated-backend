@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace color_picker_server.Controllers;
 
 [ApiController]
-[Authorize]
+// [Authorize]
 [Route("[controller]")]
 public class UserController : ControllerBase
 {

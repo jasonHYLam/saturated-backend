@@ -29,8 +29,8 @@ builder.Services.AddCors(options =>
     name: MyAllowSpecificOrigins,
     policy =>
     {
-      // policy.WithOrigins([Environment.GetEnvironmentVariable("ASPNETCORE_FRONTEND_DOMAIN")])
-      policy.WithOrigins([])
+      policy.WithOrigins([Environment.GetEnvironmentVariable("ASPNETCORE_FRONTEND_DOMAIN")])
+      // policy.WithOrigins([])
       .AllowAnyHeader()
       .AllowAnyMethod()
       .AllowCredentials();
