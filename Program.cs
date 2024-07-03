@@ -30,7 +30,6 @@ builder.Services.AddCors(options =>
     policy =>
     {
       policy.WithOrigins([Environment.GetEnvironmentVariable("ASPNETCORE_FRONTEND_DOMAIN")])
-      // policy.WithOrigins([])
       .AllowAnyHeader()
       .AllowAnyMethod()
       .AllowCredentials();
