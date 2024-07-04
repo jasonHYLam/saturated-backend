@@ -130,6 +130,7 @@ else
 }
 
 
+app.UseCors(MyAllowSpecificOrigins);
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthorization();
@@ -137,7 +138,6 @@ app.UseAuthorization();
 // {
 //   app.UseCors(MyAllowSpecificOrigins);
 // }
-app.UseCors(MyAllowSpecificOrigins);
 app.MapIdentityApi<User>();
 app.MapControllers();
 app.Run();
