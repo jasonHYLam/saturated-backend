@@ -28,14 +28,15 @@ public class UserController : ControllerBase
   public async Task<ActionResult> GetIsUserGuest()
   {
     DotEnv.Load(options: new DotEnvOptions(probeForEnv: true));
-    var user = await _userManager.GetUserAsync(HttpContext.User);
+    // var user = await _userManager.GetUserAsync(HttpContext.User);
 
-    if (user == null)
-    {
-      return NotFound();
-    }
+    // if (user == null)
+    // {
+    //   return NotFound();
+    // }
 
-    var isGuest = user.Email == Environment.GetEnvironmentVariable("GUEST_USERNAME");
+    // var isGuest = user.Email == Environment.GetEnvironmentVariable("GUEST_USERNAME");
+    var isGuest = Environment.GetEnvironmentVariable("GUEST_USERNAME");
 
     return Ok(isGuest);
   }
