@@ -2,7 +2,6 @@ using color_picker_server.Models;
 using Microsoft.EntityFrameworkCore;
 using dotenv.net;
 using CloudinaryDotNet;
-using Microsoft.Extensions.Configuration.EnvironmentVariables;
 using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -37,6 +36,22 @@ builder.Services.AddCors(options =>
     });
 });
 
+// if (builder.Environment.IsDevelopment())
+// {
+//   builder.Services.ConfigureApplicationCookie(options =>
+//   {
+//     options.Cookie.SameSite = SameSiteMode.None;
+//     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+//   });
+// }
+// else
+// {
+//   builder.Services.ConfigureApplicationCookie(options =>
+//   {
+//     options.Cookie.SameSite = SameSiteMode.Strict;
+//     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+//   });
+// }
 builder.Services.ConfigureApplicationCookie(options =>
 {
   // options.Cookie.SameSite = SameSiteMode.None;
@@ -107,11 +122,12 @@ else
 
 app.UseHttpsRedirection();
 app.UseRouting();
-// app.UseCors(MyAllowSpecificOrigins);
 app.UseAuthorization();
-
+// if (app.Environment.IsDevelopment())
+// {
+//   app.UseCors(MyAllowSpecificOrigins);
+// }
+app.UseCors(MyAllowSpecificOrigins);
 app.MapIdentityApi<User>();
 app.MapControllers();
-
-
 app.Run();
