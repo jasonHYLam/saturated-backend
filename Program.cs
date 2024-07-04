@@ -100,15 +100,6 @@ builder.Services.AddOpenApiDocument(config =>
 });
 // =================
 
-// added this just now
-// if (!builder.Environment.IsDevelopment())
-// {
-// builder.WebHost.ConfigureKestrel(serverOptions =>
-// {
-//   serverOptions.ListenAnyIP(8080);
-// });
-
-// }
 
 var app = builder.Build();
 
@@ -132,10 +123,10 @@ else
 }
 
 
-app.UseCors(MyAllowSpecificOrigins);
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthorization();
+app.UseCors(MyAllowSpecificOrigins);
 // if (app.Environment.IsDevelopment())
 // {
 //   app.UseCors(MyAllowSpecificOrigins);
