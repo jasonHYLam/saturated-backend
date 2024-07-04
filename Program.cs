@@ -3,8 +3,15 @@ using Microsoft.EntityFrameworkCore;
 using dotenv.net;
 using CloudinaryDotNet;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// added this just now
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+  serverOptions.ListenAnyIP(8080);
+}).UseIIS();
 
 DotEnv.Load(options: new DotEnvOptions(probeForEnv: true));
 // Cloudinary set up
@@ -100,7 +107,6 @@ builder.Services.AddOpenApiDocument(config =>
 
 var app = builder.Build();
 
-
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -119,6 +125,7 @@ else
     config.DocExpansion = "list";
   });
 }
+
 
 // app.UseHttpsRedirection();
 app.UseRouting();
