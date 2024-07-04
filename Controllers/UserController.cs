@@ -37,6 +37,7 @@ public class UserController : ControllerBase
 
     // var isGuest = user.Email == Environment.GetEnvironmentVariable("GUEST_USERNAME");
     var isGuest = Environment.GetEnvironmentVariable("GUEST_USERNAME");
+    Console.WriteLine(isGuest);
 
     return Ok(isGuest);
   }
