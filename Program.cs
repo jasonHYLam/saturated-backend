@@ -11,7 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.ConfigureKestrel(serverOptions =>
 {
   serverOptions.ListenAnyIP(8080);
-}).UseIIS();
+})
+// .UseIIS()
+;
 
 DotEnv.Load(options: new DotEnvOptions(probeForEnv: true));
 // Cloudinary set up
