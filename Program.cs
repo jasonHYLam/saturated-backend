@@ -7,13 +7,6 @@ using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// added this just now
-builder.WebHost.ConfigureKestrel(serverOptions =>
-{
-  serverOptions.ListenAnyIP(8080);
-})
-// .UseIIS()
-;
 
 DotEnv.Load(options: new DotEnvOptions(probeForEnv: true));
 // Cloudinary set up
@@ -106,6 +99,14 @@ builder.Services.AddOpenApiDocument(config =>
   config.Version = "v1";
 });
 // =================
+
+// added this just now
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+  serverOptions.ListenAnyIP(8080);
+})
+// .UseIIS()
+;
 
 var app = builder.Build();
 
