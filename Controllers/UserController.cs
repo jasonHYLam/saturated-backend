@@ -25,7 +25,8 @@ public class UserController : ControllerBase
 
 
   [HttpGet("isGuest")]
-  public async Task<ActionResult<string>> GetIsUserGuest()
+  // public async Task<ActionResult<string>> GetIsUserGuest()
+  public string GetIsUserGuest()
   {
     DotEnv.Load(options: new DotEnvOptions(probeForEnv: true));
     // var user = await _userManager.GetUserAsync(HttpContext.User);

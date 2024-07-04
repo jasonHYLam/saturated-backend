@@ -101,10 +101,14 @@ builder.Services.AddOpenApiDocument(config =>
 // =================
 
 // added this just now
-builder.WebHost.ConfigureKestrel(serverOptions =>
-{
-  serverOptions.ListenAnyIP(8080);
-});
+// if (!builder.Environment.IsDevelopment())
+// {
+// builder.WebHost.ConfigureKestrel(serverOptions =>
+// {
+//   serverOptions.ListenAnyIP(8080);
+// });
+
+// }
 
 var app = builder.Build();
 
