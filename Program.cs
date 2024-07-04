@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using dotenv.net;
 using CloudinaryDotNet;
 using Microsoft.Extensions.Configuration.EnvironmentVariables;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,6 +53,18 @@ builder.Services.AddDbContext<DBContext>(
   );
 // =================
 
+// Password configuration
+// =================
+builder.Services.Configure<IdentityOptions>(options =>
+{
+  options.Password.RequireNonAlphanumeric = false;
+  options.Password.RequireLowercase = true;
+  options.Password.RequireUppercase = true;
+  options.Password.RequireDigit = true;
+  options.Password.RequiredLength = 6;
+
+});
+// =================
 builder.Services.AddControllers();
 builder.Services.AddAuthorization();
 builder.Services.AddIdentityCore<User>()
