@@ -94,7 +94,7 @@ else
 
 app.UseHttpsRedirection();
 app.UseRouting();
-app.UseCors(MyAllowSpecificOrigins);
+// app.UseCors(MyAllowSpecificOrigins);
 app.UseAuthorization();
 
 app.MapIdentityApi<User>();
