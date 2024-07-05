@@ -25,8 +25,9 @@ public class UserController : ControllerBase
 
 
   [HttpGet("isGuest")]
+  // public async Task<ActionResult<bool>> GetIsUserGuest()
   // public async Task<ActionResult<string>> GetIsUserGuest()
-  public string GetIsUserGuest()
+  public ActionResult GetIsUserGuest()
   {
     DotEnv.Load(options: new DotEnvOptions(probeForEnv: true));
     // var user = await _userManager.GetUserAsync(HttpContext.User);
@@ -41,7 +42,8 @@ public class UserController : ControllerBase
     Console.WriteLine("CHECKING");
     Console.WriteLine(isGuest);
 
-    return isGuest;
+    // return Content("Haheheh");
+    return Ok();
   }
 
   [HttpPost("logout")]

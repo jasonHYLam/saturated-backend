@@ -40,6 +40,10 @@ builder.Services.AddCors(options =>
 
 // if (builder.Environment.IsDevelopment())
 // {
+//   builder.WebHost.UseUrls("http://localhost:5000", "https://localhost:5000");
+// }
+// if (builder.Environment.IsDevelopment())
+// {
 //   builder.Services.ConfigureApplicationCookie(options =>
 //   {
 //     options.Cookie.SameSite = SameSiteMode.None;
@@ -110,17 +114,17 @@ if (!app.Environment.IsDevelopment())
   // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
   app.UseHsts();
 }
-else
+// else
+// {
+app.UseOpenApi();
+app.UseSwaggerUi(config =>
 {
-  app.UseOpenApi();
-  app.UseSwaggerUi(config =>
-  {
-    config.DocumentTitle = "a";
-    config.Path = "/swagger";
-    config.DocumentPath = "/swagger/{documentName}/swagger.json";
-    config.DocExpansion = "list";
-  });
-}
+  config.DocumentTitle = "a";
+  config.Path = "/swagger";
+  config.DocumentPath = "/swagger/{documentName}/swagger.json";
+  config.DocExpansion = "list";
+});
+// }
 
 
 app.UseHttpsRedirection();
