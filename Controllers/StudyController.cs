@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace color_picker_server.Controllers;
 
 [ApiController]
-// [Authorize]
+[Authorize]
 [Route("[controller]")]
 public class StudyController : ControllerBase
 {
