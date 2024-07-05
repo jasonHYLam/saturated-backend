@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using dotenv.net;
 using CloudinaryDotNet;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,30 +37,9 @@ builder.Services.AddCors(options =>
     });
 });
 
-// if (builder.Environment.IsDevelopment())
-// {
-//   builder.WebHost.UseUrls("http://localhost:5000", "https://localhost:5000");
-// }
-// if (builder.Environment.IsDevelopment())
-// {
-//   builder.Services.ConfigureApplicationCookie(options =>
-//   {
-//     options.Cookie.SameSite = SameSiteMode.None;
-//     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-//   });
-// }
-// else
-// {
-//   builder.Services.ConfigureApplicationCookie(options =>
-//   {
-//     options.Cookie.SameSite = SameSiteMode.Strict;
-//     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-//   });
-// }
 builder.Services.ConfigureApplicationCookie(options =>
 {
   options.Cookie.SameSite = SameSiteMode.None;
-  // options.Cookie.SameSite = SameSiteMode.Strict;
   options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 });
 // =================
@@ -131,10 +109,6 @@ app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthorization();
 app.UseCors(MyAllowSpecificOrigins);
-// if (app.Environment.IsDevelopment())
-// {
-//   app.UseCors(MyAllowSpecificOrigins);
-// }
 app.MapIdentityApi<User>();
 app.MapControllers();
 app.Run();

@@ -35,8 +35,13 @@ public class UserController : ControllerBase
       return NotFound();
     }
 
-    var isGuest = user.Email == Environment.GetEnvironmentVariable("GUEST_USERNAME");
-    return Ok(isGuest);
+    var isGuest = user.Email == Environment.GetEnvironmentVariable("ASPNETCORE_GUEST_USERNAME");
+    Console.WriteLine("checking isGuest");
+    Console.WriteLine(user.Email);
+    Console.WriteLine(Environment.GetEnvironmentVariable("GUEST_USERNAME"));
+    Console.WriteLine(isGuest);
+    Console.WriteLine("\n");
+    return isGuest;
   }
 
   [HttpPost("logout")]
